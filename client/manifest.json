@@ -1,0 +1,17 @@
+{
+    "name": "Dev'Coffee",
+    "short_name": "DevCoffee",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#fdfdfd",
+    "theme_color": "#db4938",
+    "orientation": "portrait-primary",
+    "icons":[
+      {
+        "src": "icon/icon-156x156.png",
+        "type": "image/png",
+        "sizes": "156x156"
+      }
+    ]
+    
+  }
