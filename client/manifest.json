@@ -1,10 +1,10 @@
 {
-    "name": "Dev'Coffee",
-    "short_name": "DevCoffee",
+    "name": "Lonely Mug",
+    "short_name": "Lonely Mug",
     "start_url": "/",
     "display": "standalone",
     "background_color": "#fdfdfd",
-    "theme_color": "#db4938",
+    "theme_color": "#353535",
     "orientation": "portrait-primary",
     "icons":[
       {
