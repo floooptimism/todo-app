@@ -179,32 +179,43 @@ export default (function(){
                 })
             }
 
+            // main sub-function, this is where the process happens when switching task from "progress" to "completed" vice-versa
+            function handleTransition(el){
+                let element = el;
+                let remover = null;
 
-            // responsible for removing transition listener, called inside the listener itself
-            let removeListener = function(el, x){
-                el.removeEventListener('transitionend',x);
-            }
+                function setRemover(fn){
+                    remover = fn;
+                }
+                function removeListener(){
+                    el.removeEventListener("transitionend", remover);
+                }
+                function transition(){
+                    let style = window.getComputedStyle(el);
+                    
+                    if(style.height == "0px" && style.marginBottom == "0px" && style.marginTop == "0px" &&
+                      style.marginLeft == "0px" && style.marginRight == "0px"   && style.paddingBottom == "0px"
+                      && style.paddingTop == "0px" && style.paddingLeft == "0px" && style.paddingRight == "0px" ){ 
+                        removeListener();
+                        let status = parseInt(el.dataset['status'])
+                        if(status){
+                            switch_parent(el, 1);
+                        }else{
+                            switch_parent(el, 0);  
 
-            let rl = removeListener;
-
-            function handleTransition(el,cb,controller,event){
-                let style = window.getComputedStyle(el);
-                const status = parseInt(el.dataset['status'])
-                if(style.height == "0px" && style.marginBottom == "0px" && style.marginTop == "0px" &&
-                  style.marginLeft == "0px" && style.marginRight == "0px"   && style.paddingBottom == "0px"
-                  && style.paddingTop == "0px" && style.paddingLeft == "0px" && style.paddingRight == "0px" ){
-                    rl();
-                    if(status){
-                        switch_parent(el, 1);
-                    }else{
-                        switch_parent(el, 0);
-                    }
-                    setTimeout(function(){
-                        el.classList.add('task-show');
-                        el.classList.remove('task-hide');
-                    },0);
-                    db_toggle_task(parseInt(el.dataset['key']), status);
-                } 
+                        }
+                        setTimeout(function(){
+                            el.classList.add('task-show');
+                            el.classList.remove('task-hide');
+                        },0);
+                        db_toggle_task(parseInt(el.dataset['key']), status);
+                    } 
+                }
+                return {
+                    setRemover,
+                    removeListener,
+                    transition
+                }
             }
 
             
@@ -212,23 +223,18 @@ export default (function(){
             return function(el, event){
                  //set data-status
                 el.dataset['status'] = el.dataset['status'] == "0" ? 1:0;
-                //hide el
+                
+                // hide element
                 el.classList.remove('task-show');
-
                 el.classList.add('task-hide');
-
-                function callback(){
-                    
-                }
                 
+                // prepare the eventlistener and the remover,
+                let handle = handleTransition(el);
+                let remover = handle.transition;
+                handle.setRemover(remover);
 
-                let x = handleTransition.bind(null, el, callback)
-
-                // match the listener function for removal.
-                rl = removeListener.bind(null, el, x);
-
-                
-                el.addEventListener('transitionend', x);
+                // bind the listener
+                el.addEventListener('transitionend', remover);
             }
         })()
 
