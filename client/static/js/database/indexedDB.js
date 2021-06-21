@@ -1,6 +1,6 @@
 export default (function(){
     let db_name = "todolist";
-    let db_version = 2;
+    let db_version = 3;
 
     function start(cb, error){
         let db;
@@ -74,7 +74,6 @@ export default (function(){
         request.onsuccess = function(event){
             db = event.target.result;
 
-
             db.onerror = function(event) {
                 console.log("Db error");
                 if(error) error();
@@ -85,12 +84,14 @@ export default (function(){
         }
 
         request.onupgradeneeded = function(event){
-            var db = event.target.result;
-
+            var db = event.target.result;   
         // Create an objectStore for this database
-            var project_objectstore = db.createObjectStore("projects", {keyPath : "name",autoIncrement: true});
-            var todo_objectstore = db.createObjectStore("tasks", { keyPath:"project" });
-            
+            try{
+                var project_objectstore = db.createObjectStore("projects", {keyPath : "name",autoIncrement: true});
+                var todo_objectstore = db.createObjectStore("tasks", { keyPath:"project" });                
+            }catch(err){
+                console.log("Ignoring... " + err);
+            }
         }
     }
 
