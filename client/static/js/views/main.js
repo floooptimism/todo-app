@@ -45,7 +45,7 @@ export default (function () {
         }
         
         // add project
-        function handleButton(){
+        function addProject(){
             let input = add_new.querySelector('input');
             let value = input.value.trim();
             if(value == "") return;
@@ -70,7 +70,7 @@ export default (function () {
             event.preventDefault();
         }
         //attach eventlistener for button
-        add_new.querySelector('button').addEventListener('click', handleButton)
+        add_new.querySelector('button').addEventListener('click', addProject)
         add_new.querySelector('form').addEventListener('submit',form)
 
         update();
@@ -79,7 +79,7 @@ export default (function () {
         return function(){
             //remove eventlisteners
             add_new.querySelector('form').removeEventListener('submit', form)
-            add_new.querySelector('button').removeEventListener('click', handleButton);
+            add_new.querySelector('button').removeEventListener('click', addProject);
         }
 
     }

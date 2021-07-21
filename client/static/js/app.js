@@ -3,7 +3,7 @@ import project from './views/project'
 import not_found from './views/404';
 
 // register service worker
-
+console.log("Hey there pretty 😘")
 if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('/serviceworker.js')
     .then((reg) => {
@@ -39,6 +39,7 @@ const router = {
             root.innerHTML = app.route.view.render();
             app.exit = app.route.view.enter(params);
         }else{
+            // 404 Page
             root.innerHTML = not_found.render();
             app.exit = not_found.enter(params);
         }

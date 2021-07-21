@@ -35,7 +35,7 @@ export default (function(){
             let request = objectstore.getAll();
     
             request.onerror = function(event){
-                alert("Error on readAll()");
+                alert("Error on reddy");
             }
     
             request.onsuccess = function(event){
@@ -47,7 +47,7 @@ export default (function(){
             let request = objectstore.get(key);
 
             request.onerror = function(){
-                alert("Error on get()");
+                alert("Error on getty");
             }
 
             request.onsuccess = function(event){
@@ -66,8 +66,8 @@ export default (function(){
         let  request = window.indexedDB.open(db_name, db_version);
 
         request.onerror = function(){
-            alert("Error loading the database.");
-            alert("Retrying");
+            console.log("Error loading the database. damn you");
+            console.log("Retrying cause I'm in love with you 😘");
             setTimeout(init, 2000);
         }
 
@@ -90,7 +90,7 @@ export default (function(){
                 var project_objectstore = db.createObjectStore("projects", {keyPath : "name",autoIncrement: true});
                 var todo_objectstore = db.createObjectStore("tasks", { keyPath:"project" });                
             }catch(err){
-                console.log("Ignoring... " + err);
+                console.log("Ignoring cause I'm fantastic 🥰... " + err);
             }
         }
     }

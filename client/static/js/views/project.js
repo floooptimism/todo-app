@@ -249,7 +249,6 @@ export default (function(){
             }
         }
 
-
         document.addEventListener('input', inputListener);
 
 
